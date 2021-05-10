@@ -1,4 +1,7 @@
-# kubectl -n kube-system port-forward deployment/coredns 5353:53
+# How the kubectl port-forward works exactly
+
+Or in another words, what the hell `kubectl -n kube-system port-forward
+deployment/coredns 5353:53` was implemented.
 
 ## kubectl
 
