@@ -62,7 +62,7 @@ Now we will compare the iptables after we scale up `deployment/coredns`
 
   kubectl -n kube-system scale --replicas=4 deployment/coredns
 
-```text
+```diff
 diff -u /tmp/before.txt /tmp/after.txt
 --- /tmp/before.txt	2021-05-11 07:25:03.842424691 +0800
 +++ /tmp/after.txt	2021-05-11 07:24:39.989090219 +0800
@@ -157,7 +157,7 @@ Please enable the verbose log level of the kube-proxy at your own chooice.
 
   kubectl -n kube-system edit daemonset/kube-proxy
 
-```text
+```diff
 @@ -152,6 +152,7 @@
        containers:
        - command:
