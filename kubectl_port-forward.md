@@ -185,7 +185,7 @@ time used this magic. Simplicity is for users, complexity is under the iceberg.
 +---------+           +----------------+           +-------------------------------------------+
 ```
 
-## Buy me a drink
+## Buy me a coffee
 
 - wechat
 

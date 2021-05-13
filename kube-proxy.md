@@ -292,7 +292,7 @@ I0510 23:46:00.163223       1 iptables.go:456] running iptables: iptables [-w 5 
 
 That's what the complexity behind the dynamic kubernetes service loadbalancer.
 
-## Buy me a drink
+## Buy me a coffee
 
 - wechat
 
