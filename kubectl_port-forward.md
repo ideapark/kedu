@@ -187,5 +187,10 @@ time used this magic. Simplicity is for users, complexity is under the iceberg.
 
 ## Buy me a drink
 
+- wechat
+
 ![wechat](assets/wechat.png)
+
+- alipay
+
 ![alipay](assets/alipay.png)
