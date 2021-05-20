@@ -143,6 +143,20 @@ connect between the `network data (such as post data)` and `kubernetes go struct
 object`. To be more abstract, it is used to codec data between memory and the
 wire.
 
+## Why we need this conversion and serialization?
+
+Serialization is easy to understand that we need to send the kubernetes api
+objects to other network connected target, such as `kube-proxy` list all the
+services from `kube-apiserver`.
+
+Conversion needs further explaination, since kubernetes itself envolves, its api
+object will change by time. For compatibility, we do expect our Pod yaml still
+works in the next kubernetes release. How do we promise that? Yes, conversion
+comes to rescue. You can still give the kubernetes old Pod yaml, and it will
+convert it to the latest Pod definition. Here the runtime use a internal version
+of kubernetes objects to eliminate the N.vs.N conversions to 1.vs.N, That's all
+complexity behind the great compatibility kubernetes promise us.
+
 ## Buy me a coffee
 
 - wechat
