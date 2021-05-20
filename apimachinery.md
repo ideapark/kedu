@@ -71,6 +71,78 @@ Conversion from and to the hub version
                  +----+
 ```
 
+## k8s.io/apimachinery/pkg/runtime.Scheme
+
+All the kubernetes native types will be registered to this scheme:
+
+1. [internal version example](https://github.com/kubernetes/kubernetes/blob/29e4fdab4d644af51c1fa2623bf0e78f3dd6383b/pkg/apis/apps/register.go#L49)
+2. [external version example](https://github.com/kubernetes/kubernetes/blob/29e4fdab4d644af51c1fa2623bf0e78f3dd6383b/staging/src/k8s.io/api/apps/v1/register.go#L45)
+
+```go
+package runtime // import "k8s.io/apimachinery/pkg/runtime"
+
+// Scheme defines methods for serializing and deserializing API objects, a type
+// registry for converting group, version, and kind information to and from Go
+// schemas, and mappings between Go schemas of different versions. A scheme is the
+// foundation for a versioned API and versioned configuration over time.
+//
+// In a Scheme, a Type is a particular Go struct, a Version is a point-in-time
+// identifier for a particular representation of that Type (typically backwards
+// compatible), a Kind is the unique name for that Type within the Version, and a
+// Group identifies a set of Versions, Kinds, and Types that evolve over time. An
+// Unversioned Type is one that is not yet formally bound to a type and is promised
+// to be backwards compatible (effectively a "v1" of a Type that does not expect
+// to break in the future).
+//
+// Schemes are not expected to change at runtime and are only threadsafe after
+// registration is complete.
+type Scheme struct {
+	// versionMap allows one to figure out the go type of an object with
+	// the given version and name.
+	gvkToType map[schema.GroupVersionKind]reflect.Type
+
+	// typeToGroupVersion allows one to find metadata for a given go object.
+	// The reflect.Type we index by should *not* be a pointer.
+	typeToGVK map[reflect.Type][]schema.GroupVersionKind
+
+	// unversionedTypes are transformed without conversion in ConvertToVersion.
+	unversionedTypes map[reflect.Type]schema.GroupVersionKind
+
+	// unversionedKinds are the names of kinds that can be created in the context of any group
+	// or version
+	// TODO: resolve the status of unversioned types.
+	unversionedKinds map[string]reflect.Type
+
+	// Map from version and resource to the corresponding func to convert
+	// resource field labels in that version to internal version.
+	fieldLabelConversionFuncs map[schema.GroupVersionKind]FieldLabelConversionFunc
+
+	// defaulterFuncs is an array of interfaces to be called with an object to provide defaulting
+	// the provided object must be a pointer.
+	defaulterFuncs map[reflect.Type]func(interface{})
+
+	// converter stores all registered conversion functions. It also has
+	// default converting behavior.
+	converter *conversion.Converter
+
+	// versionPriority is a map of groups to ordered lists of versions for those groups indicating the
+	// default priorities of these versions as registered in the scheme
+	versionPriority map[string][]string
+
+	// observedVersions keeps track of the order we've seen versions during type registration
+	observedVersions []schema.GroupVersion
+
+	// schemeName is the name of this scheme.  If you don't specify a name, the stack of the NewScheme caller will be used.
+	// This is useful for error reporting to indicate the origin of the scheme.
+	schemeName string
+}
+```
+
+From the above struct definition, we can concluded that `Scheme` is used to
+connect between the `network data (such as post data)` and `kubernetes go struct
+object`. To be more abstract, it is used to codec data between memory and the
+wire.
+
 ## Buy me a coffee
 
 - wechat
