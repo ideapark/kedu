@@ -8,7 +8,7 @@ service.
 ## Why is it special?
 
 Please spin up a fresh kubernetes cluster using
-[`Kind`](https://kind.sigs.k8s.io/) or [`Docker Desktop`](https://www.docker.com/products/docker-desktop) (as of my case).
+[`Kind`](https://kind.sigs.k8s.io/) or [`Docker Desktop`](https://www.docker.com/products/docker-desktop) (as is my case).
 
 ```bash
 $ kubectl get all
@@ -26,8 +26,8 @@ We found the following questions:
 
 ## Explain technology details in the underground
 
-First, this service is used to expose the kubernetes cluster's kube-apiserver to
-be comsumed by any authorized and authenticated user (I means programmer like
+First, this service is used to expose the kubernetes cluster's `kube-apiserver`
+to be comsumed by any authorized and authenticated user (I means programmer like
 you) or program (pods running inside this cluster). So the first question is
 almost clear that it was choosen by purpose, to be widely known (for the name
 `kubernetes`) and accessable (for the namespace `default`).
@@ -45,8 +45,8 @@ service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   1s
 
 The service was deleted, but created automatically again! A clerver guy may
 quickly speak out that: I know, it's the controller. But keep this in mind that
-there is no such service controller in the `kube-controllermanager` component.
-The controller is running in the `kube-apiserver`.
+there is no such service controller in the `kube-controller-manager` component.
+Instead, the controller is running in the `kube-apiserver`.
 
 [link to source](https://github.com/kubernetes/kubernetes/blob/9f0f14952c51e7a5622eac05c541ba20b5821627/pkg/controlplane/controller.go#L51)
 
@@ -56,15 +56,15 @@ was passed in here:
 [link to source](https://github.com/kubernetes/kubernetes/blob/9f0f14952c51e7a5622eac05c541ba20b5821627/pkg/controlplane/controller.go#L121)
 
 And dig further, I found if the `kube-apiserver` was not passed in this ip or ip
-is not in service ip range, it will pick the first ip address (10.96.0.1) from
-the service ip range (as of our case is 10.96.0.0/16).
+is not in service ip range, it will pick the first ip address (`10.96.0.1`) from
+the service ip range (as is our case is `10.96.0.0/16`).
 
 [link to source](https://github.com/kubernetes/kubernetes/blob/9f0f14952c51e7a5622eac05c541ba20b5821627/pkg/controlplane/instance.go#L304)
 
 [link to source](https://github.com/kubernetes/kubernetes/blob/9f0f14952c51e7a5622eac05c541ba20b5821627/pkg/controlplane/services.go#L47)
 
-The other questions should be self-explainatory now, that's the complexity
-behind the simplicity `kubernetes.default.svc.cluster.local`.
+The other questions should be self-explanatory now, that's the complexity behind
+the simplicity `kubernetes.default.svc.cluster.local`.
 
 ## Buy me a coffee
 
