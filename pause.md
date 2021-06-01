@@ -77,3 +77,13 @@ the pod sandbox when the pod was created or deleted.
 
 This conclusion is from the dockershim implementation code, I don't have digged
 out the cri implemetation details.
+
+## Buy me a coffee
+
+- wechat
+
+![wechat](assets/wechat.png)
+
+- alipay
+
+![alipay](assets/alipay.png)
