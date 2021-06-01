@@ -59,3 +59,21 @@ reap and loop.
 [link to source](https://github.com/kubernetes/kubernetes/blob/d6b408f74890abaa0b5be7172714c7fe89ee7eff/build/pause/linux/pause.c#L42)
 
 ## Why `kubectl describe pod/xxxx` not showing this container?
+
+First, user creating a pod do not specify this special container, it is created
+by the kubelet by default when a new pod was initliazing. So pause lifecycle is
+bound with the pod, it is responsible for the pod resource holder, especialy
+network namespace.
+
+[link to source](https://github.com/kubernetes/kubernetes/blob/9c2684150c4d4aed99c6f950f4bc4c0754720897/pkg/kubelet/dockershim/docker_sandbox.go#L43)
+
+The kubelet will
+[run](https://github.com/kubernetes/kubernetes/blob/9c2684150c4d4aed99c6f950f4bc4c0754720897/pkg/kubelet/dockershim/docker_sandbox.go#L89)
+and
+[stop](https://github.com/kubernetes/kubernetes/blob/9c2684150c4d4aed99c6f950f4bc4c0754720897/pkg/kubelet/dockershim/docker_sandbox.go#L212)
+the pod sandbox when the pod was created or deleted.
+
+## Further QA
+
+This conclusion is from the dockershim implementation code, I don't have digged
+out the cri implemetation details.
