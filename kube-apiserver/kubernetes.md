@@ -70,8 +70,8 @@ the simplicity `kubernetes.default.svc.cluster.local`.
 
 - wechat
 
-![wechat](assets/wechat.png)
+![wechat](../img/wechat.png)
 
 - alipay
 
-![alipay](assets/alipay.png)
+![alipay](../img/alipay.png)

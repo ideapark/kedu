@@ -296,8 +296,8 @@ That's what the complexity behind the dynamic kubernetes service loadbalancer.
 
 - wechat
 
-![wechat](assets/wechat.png)
+![wechat](../img/wechat.png)
 
 - alipay
 
-![alipay](assets/alipay.png)
+![alipay](../img/alipay.png)

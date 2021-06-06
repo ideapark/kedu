@@ -161,8 +161,8 @@ complexity behind the great compatibility kubernetes promise us.
 
 - wechat
 
-![wechat](assets/wechat.png)
+![wechat](../img/wechat.png)
 
 - alipay
 
-![alipay](assets/alipay.png)
+![alipay](../img/alipay.png)

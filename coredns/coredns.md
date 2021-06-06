@@ -177,8 +177,8 @@ don't ask egg for a chicken.
 
 - wechat
 
-![wechat](assets/wechat.png)
+![wechat](../img/wechat.png)
 
 - alipay
 
-![alipay](assets/alipay.png)
+![alipay](../img/alipay.png)
