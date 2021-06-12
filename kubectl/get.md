@@ -31,6 +31,35 @@ internals of cluster server, we only care the kubectl client specific details.
 
 ## `./kube/config`
 
+```bash
+$kubectl config view
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: DATA+OMITTED
+    server: https://kubernetes.docker.internal:6443
+  name: docker-desktop
+contexts:
+- context:
+    cluster: docker-desktop
+    user: docker-desktop
+  name: docker-desktop
+current-context: docker-desktop
+kind: Config
+preferences: {}
+users:
+- name: docker-desktop
+  user:
+    client-certificate-data: REDACTED
+    client-key-data: REDACTED
+```
+
+There is a default `context` which organize `user` and `cluster`. So `kubectl`
+will speaks to `cluster docker-desktop`, authenticates as `user docker-desktop`.
+
+For our case, cluster is a server and user is authenticated by its client
+certificate.
+
 ## all to kubernetes resources
 
 ## get pod
