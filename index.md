@@ -15,3 +15,4 @@ simplicity of kubernetes.
 - [kube-proxy](kube-proxy)
 - [kubectl](kubectl)
 - [kubelet](kubelet)
+- [kubeadm](kubeadm)
