@@ -8,7 +8,7 @@ easy to understand by yourself.
 ## Kubernetes Types Conversion & Serialization
 
 ```bash
-$ go doc k8s.io/apimachinery/pkg/runtime
+$go doc k8s.io/apimachinery/pkg/runtime
 package runtime // import "k8s.io/apimachinery/pkg/runtime"
 
 Package runtime defines conversions between generic types and structs to map

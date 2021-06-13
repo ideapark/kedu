@@ -8,7 +8,7 @@ deployment/coredns 5353:53` was implemented.
 - kubectl will listen on port 5353 until get CTRL-C killing signal
 
 ```bash
-$ kubectl -n kube-system port-forward deployment/coredns 5353:53
+$kubectl -n kube-system port-forward deployment/coredns 5353:53
 Forwarding from 127.0.0.1:5353 -> 53
 Forwarding from [::1]:5353 -> 53
 ```
@@ -18,7 +18,7 @@ Forwarding from [::1]:5353 -> 53
 - from kubectl to kube-apiserver
 
 ```bash
-kubectl -v=6 -n kube-system port-forward deployment/coredns 5353:53
+$kubectl -v=6 -n kube-system port-forward deployment/coredns 5353:53
 I0508 17:34:26.376413  221687 loader.go:372] Config loaded from file:  /home/park/.kube/config
 I0508 17:34:26.386867  221687 round_trippers.go:454] GET https://127.0.0.1:45691/apis/apps/v1/namespaces/kube-system/deployments/coredns 200 OK in 6 milliseconds
 I0508 17:34:26.393478  221687 round_trippers.go:454] GET https://127.0.0.1:45691/api/v1/namespaces/kube-system/pods?labelSelector=k8s-app%3Dkube-dns 200 OK in 2 milliseconds
@@ -40,7 +40,7 @@ The kubectl verbose log gives us 3 hints:
 
 Let's move our focus to how kube-apiserver handle the pod subresource `/portforward`.
 
-```bash
+```text
  0  0x00000000048d85ca in k8s.io/kubernetes/pkg/registry/core/pod.PortForwardLocation
     at ./pkg/registry/core/pod/strategy.go:576
  1  0x00000000048e18f8 in k8s.io/kubernetes/pkg/registry/core/pod/rest.(*PortForwardREST).Connect

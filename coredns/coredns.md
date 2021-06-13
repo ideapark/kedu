@@ -5,7 +5,7 @@ server, and how the kubernetes service maps to the dns record. For example, you
 know that:
 
 ```bash
-kubectl get service/kubernetes
+$kubectl get service/kubernetes
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   7d16h
 ```
@@ -18,11 +18,11 @@ explain why this special servce has this special service ip, more refer to
 Now, let's explore more on the coredns deployment:
 
 ```bash
-kubectl -n kube-system get deployment/coredns
+$kubectl -n kube-system get deployment/coredns
 NAME      READY   UP-TO-DATE   AVAILABLE   AGE
 coredns   1/1     1            1           13d
 
-kubectl -n kube-system get services/kube-dns
+$kubectl -n kube-system get services/kube-dns
 NAME       TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                  AGE
 kube-dns   ClusterIP   10.96.0.10   <none>        53/UDP,53/TCP,9153/TCP   13d
 ```
@@ -37,12 +37,12 @@ the pod running on this cluster, we could lookup this dns server to resolve
 cluster service names to service IPs.
 
 ```bash
-kubectl run alpine -ti --rm --restart=Never --image=alpine:latest -- cat /etc/resolv.conf
+$kubectl run alpine -ti --rm --restart=Never --image=alpine:latest -- cat /etc/resolv.conf
 nameserver 10.96.0.10
 search default.svc.cluster.local svc.cluster.local cluster.local
 options ndots:5
 
-kubectl run alpine -ti --rm --restart=Never --image=alpine:latest -- wget --no-check-certificate -O /dev/stdout https://kubernetes.default.svc.cluster.local/version
+$kubectl run alpine -ti --rm --restart=Never --image=alpine:latest -- wget --no-check-certificate -O /dev/stdout https://kubernetes.default.svc.cluster.local/version
 Connecting to kubernetes.default.svc.cluster.local (10.96.0.1:443)
 
 {

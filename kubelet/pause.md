@@ -4,7 +4,7 @@ Do you have ever noticed that there is a container running image `pause:X.X`
 in your Pod?
 
 ```bash
-$ docker ps
+$docker ps
 CONTAINER ID   IMAGE                              COMMAND                  CREATED        STATUS        PORTS     NAMES
 797ef4864f74   k8s.gcr.io/pause:3.2               "/pause"                 3 days ago     Up 3 days               k8s_POD_vpnkit-controller_kube-system_e61b8668-12ea-4626-9e8d-23ed1b8886a6_0
 4f0e62a39683   k8s.gcr.io/pause:3.2               "/pause"                 3 days ago     Up 3 days               k8s_POD_storage-provisioner_kube-system_c8a61f75-82b8-4d8a-adb3-409a88539c9b_0
@@ -23,7 +23,7 @@ b5dbb1bf7f30   docker/desktop-vpnkit-controller   "/kube-vpnkit-forwar…"   3 d
 8957df9e88b0   699c5704c97f                       "kube-controller-man…"   3 days ago     Up 3 days               k8s_kube-controller-manager_kube-controller-manager-docker-desktop_kube-system_77e9d7fdbb29bf4b5600ab5fbb368a2b_5
 463d0a0de601   322111412cde                       "kube-apiserver --ad…"   3 days ago     Up 3 days               k8s_kube-apiserver_kube-apiserver-docker-desktop_kube-system_4ac4b5ee26e7058a1ed090c12123e3a6_4
 
-$ docker images
+$docker images
 REPOSITORY                           TAG        IMAGE ID       CREATED         SIZE
 alpine                               latest     3fcaaf3dc95c   6 weeks ago     5.35MB
 docker/desktop-storage-provisioner   v1.1       e704287ce753   14 months ago   41.8MB

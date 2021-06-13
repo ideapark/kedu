@@ -11,7 +11,7 @@ Please spin up a fresh kubernetes cluster using
 [`Kind`](https://kind.sigs.k8s.io/) or [`Docker Desktop`](https://www.docker.com/products/docker-desktop) (as is my case).
 
 ```bash
-$ kubectl get all
+$kubectl get all
 NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   2d11h
 ```
@@ -35,10 +35,10 @@ almost clear that it was choosen by purpose, to be widely known (for the name
 Second, let's do something evil:
 
 ```bash
-$ kubectl delete all --all
+$kubectl delete all --all
 service "kubernetes" deleted
 
-$ kubectl get all
+$kubectl get all
 NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   1s
 ```
