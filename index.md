@@ -19,3 +19,4 @@ simplicity of kubernetes.
 - [kubeadm](kubeadm)
 - [kubectl](kubectl)
 - [kubelet](kubelet)
+- [teapot](teapot)
