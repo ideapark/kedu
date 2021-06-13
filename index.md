@@ -11,12 +11,12 @@ have we understood the complexity under the cover, can we really appreciate the
 simplicity of kubernetes.
 
 - [client-go](client-go)
-- [coredns](coredns)
-- [docker](docker)
-- [etcd](etcd)
 - [kube-apiserver](kube-apiserver)
 - [kube-proxy](kube-proxy)
 - [kubeadm](kubeadm)
 - [kubectl](kubectl)
 - [kubelet](kubelet)
+- [coredns](coredns)
+- [etcd](etcd)
+- [docker](docker)
 - [teapot](teapot)
