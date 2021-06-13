@@ -15,7 +15,6 @@ var htmlFS embed.FS
 
 func main() {
 	fmt.Println(motto)
-
-	fmt.Println("server listenning on :8080")
+	fmt.Println("kedu serving on :8080")
 	http.ListenAndServe(":8080", http.FileServer(http.FS(htmlFS)))
 }
