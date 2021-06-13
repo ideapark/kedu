@@ -13,6 +13,6 @@ simplicity of kubernetes.
 - [etcd](etcd)
 - [kube-apiserver](kube-apiserver)
 - [kube-proxy](kube-proxy)
+- [kubeadm](kubeadm)
 - [kubectl](kubectl)
 - [kubelet](kubelet)
-- [kubeadm](kubeadm)
