@@ -218,7 +218,7 @@ vendor/golang.org/x/text/unicode/bidi
 vendor/golang.org/x/text/unicode/norm
 ```
 
-## `go doc` to explore any package
+## `go doc` to explore packages
 
 ```bash
 $go doc archive/tar
@@ -272,7 +272,7 @@ The commands are:
 Use "go help mod <command>" for more information about a command.
 ```
 
-## other daily Go tools
+## Other daily Go tools
 
 - go test
 - go install
@@ -280,7 +280,7 @@ Use "go help mod <command>" for more information about a command.
 - go build
 - go env
 
-## emacs love Go
+## Emacs love Go
 
 Personally, I use emacs to coding and reading Go code. you would have your
 favourite IDEs to working with Go. If you are interesting in what am I using to
