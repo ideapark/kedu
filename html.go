@@ -22,7 +22,7 @@ func main() {
 
 		htmlPath := strings.TrimRight(markdownPath, ".md") + ".html"
 
-		fmt.Printf("%s -> %s\n", markdownPath, htmlPath)
+		fmt.Printf("html: %s -> %s\n", markdownPath, htmlPath)
 
 		markdownData, err := ioutil.ReadFile(markdownPath)
 		if err != nil {
