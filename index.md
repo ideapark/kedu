@@ -1,5 +1,7 @@
 # Kubernetes Education
 
+![logo](logo.png)
+
 > "Simplicity is a great virtue but it requires hard work to achieve it and
 > education to appreciate it. And to make matters worse: complexity sells
 > better." - Edsger W. Dijkstra
@@ -10,6 +12,7 @@ simplicity of kubernetes.
 
 - [client-go](client-go)
 - [coredns](coredns)
+- [docker](docker)
 - [etcd](etcd)
 - [kube-apiserver](kube-apiserver)
 - [kube-proxy](kube-proxy)
