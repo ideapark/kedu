@@ -7,7 +7,7 @@ kedu:
 	@go run kedu.go
 
 build:
-	@go build kedu.go
+	@GOOS=linux GOARCH=amd64 go build kedu.go
 
 clean:
 	@git clean -xdf .
