@@ -20,7 +20,7 @@ func main() {
 			return nil
 		}
 
-		htmlPath := strings.TrimRight(markdownPath, ".md") + ".html"
+		htmlPath := strings.TrimSuffix(markdownPath, ".md") + ".html"
 
 		fmt.Printf("html: %s -> %s\n", markdownPath, htmlPath)
 
