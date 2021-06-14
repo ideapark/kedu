@@ -2,7 +2,7 @@
 
 ## git clone `git@github.com:kubernetes/kubernetes.git`
 
-## Start your good idea on a new branch
+## Start your idea on a new branch
 
 ```bash
 $git checkout -b brilliant_idea origin/master

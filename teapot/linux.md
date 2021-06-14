@@ -1,23 +1,24 @@
 # Linux
 
-## prerequisite
+## Prerequisite
 
 - known unix tree filesystem
 - skilled with bash
 - cpu, memory, disk, network basics
 - make yourself love command line interface
 
-## namespace isolation
+## Namespace Isolation
 
 - PID
-- NETWORK
+- NET
 - UTS
 - FS
 
-## frequently used tools to dig into container world
+## Frequently used tools to dig into container world
 
 - nsenter
 - tcpdump
+- crictl/docker
 - ip
 - top/htop
 - kill/killall
