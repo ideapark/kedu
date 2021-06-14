@@ -76,7 +76,50 @@ Conversion from and to the hub version
 All the kubernetes native types will be registered to this scheme:
 
 1. [internal version example](https://github.com/kubernetes/kubernetes/blob/29e4fdab4d644af51c1fa2623bf0e78f3dd6383b/pkg/apis/apps/register.go#L49)
+
+```go
+// Adds the list of known types to the given scheme.
+func addKnownTypes(scheme *runtime.Scheme) error {
+	// TODO this will get cleaned up with the scheme types are fixed
+	scheme.AddKnownTypes(SchemeGroupVersion,
+		&DaemonSet{},
+		&DaemonSetList{},
+		&Deployment{},
+		&DeploymentList{},
+		&DeploymentRollback{},
+		&autoscaling.Scale{},
+		&StatefulSet{},
+		&StatefulSetList{},
+		&ControllerRevision{},
+		&ControllerRevisionList{},
+		&ReplicaSet{},
+		&ReplicaSetList{},
+	)
+	return nil
+}
+```
+
 2. [external version example](https://github.com/kubernetes/kubernetes/blob/29e4fdab4d644af51c1fa2623bf0e78f3dd6383b/staging/src/k8s.io/api/apps/v1/register.go#L45)
+
+```go
+// Adds the list of known types to the given scheme.
+func addKnownTypes(scheme *runtime.Scheme) error {
+	scheme.AddKnownTypes(SchemeGroupVersion,
+		&Deployment{},
+		&DeploymentList{},
+		&StatefulSet{},
+		&StatefulSetList{},
+		&DaemonSet{},
+		&DaemonSetList{},
+		&ReplicaSet{},
+		&ReplicaSetList{},
+		&ControllerRevision{},
+		&ControllerRevisionList{},
+	)
+	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
+	return nil
+}
+```
 
 ```go
 package runtime // import "k8s.io/apimachinery/pkg/runtime"
