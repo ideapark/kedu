@@ -13,7 +13,39 @@ Forwarding from 127.0.0.1:5353 -> 53
 Forwarding from [::1]:5353 -> 53
 ```
 
-[link to source](https://github.com/kubernetes/kubernetes/blob/3dd0597843ced8270bbbb9d26ac390397e2c4166/staging/src/k8s.io/kubectl/pkg/cmd/portforward/portforward.go#L401)
+```go
+// RunPortForward implements all the necessary functionality for port-forward cmd.
+func (o PortForwardOptions) RunPortForward() error {
+	pod, err := o.PodClient.Pods(o.Namespace).Get(context.TODO(), o.PodName, metav1.GetOptions{})
+	if err != nil {
+		return err
+	}
+
+	if pod.Status.Phase != corev1.PodRunning {
+		return fmt.Errorf("unable to forward port because pod is not running. Current status=%v", pod.Status.Phase)
+	}
+
+	signals := make(chan os.Signal, 1)
+	signal.Notify(signals, os.Interrupt)
+	defer signal.Stop(signals)
+
+	go func() {
+		<-signals
+		if o.StopChannel != nil {
+			close(o.StopChannel)
+		}
+	}()
+
+	req := o.RESTClient.Post().
+		Resource("pods").
+		Namespace(o.Namespace).
+		Name(pod.Name).
+		SubResource("portforward")
+
+	return o.PortForwarder.ForwardPorts("POST", req.URL(), o)
+}
+```
+[more](https://github.com/kubernetes/kubernetes/blob/3dd0597843ced8270bbbb9d26ac390397e2c4166/staging/src/k8s.io/kubectl/pkg/cmd/portforward/portforward.go#L401)
 
 - from kubectl to kube-apiserver
 
@@ -34,7 +66,39 @@ The kubectl verbose log gives us 3 hints:
 2. and it chooses one of active pods (randomly?)
 3. make a POST request to the selected pod subresource `/portforward`
 
-[link to source](https://github.com/kubernetes/kubernetes/blob/3dd0597843ced8270bbbb9d26ac390397e2c4166/staging/src/k8s.io/kubectl/pkg/cmd/portforward/portforward.go#L408)
+```go
+// RunPortForward implements all the necessary functionality for port-forward cmd.
+func (o PortForwardOptions) RunPortForward() error {
+	pod, err := o.PodClient.Pods(o.Namespace).Get(context.TODO(), o.PodName, metav1.GetOptions{})
+	if err != nil {
+		return err
+	}
+
+	if pod.Status.Phase != corev1.PodRunning {
+		return fmt.Errorf("unable to forward port because pod is not running. Current status=%v", pod.Status.Phase)
+	}
+
+	signals := make(chan os.Signal, 1)
+	signal.Notify(signals, os.Interrupt)
+	defer signal.Stop(signals)
+
+	go func() {
+		<-signals
+		if o.StopChannel != nil {
+			close(o.StopChannel)
+		}
+	}()
+
+	req := o.RESTClient.Post().
+		Resource("pods").
+		Namespace(o.Namespace).
+		Name(pod.Name).
+		SubResource("portforward")
+
+	return o.PortForwarder.ForwardPorts("POST", req.URL(), o)
+}
+```
+[more](https://github.com/kubernetes/kubernetes/blob/3dd0597843ced8270bbbb9d26ac390397e2c4166/staging/src/k8s.io/kubectl/pkg/cmd/portforward/portforward.go#L408)
 
 ## kube-apiserver
 
@@ -151,14 +215,108 @@ I have grasped a snopshot of the kube-apiserver call stack when the pod
 The upppermost func told us that the kube-apiserver proxied port-forward request
 the node which pod was scheduled running on.
 
-[link to source](https://github.com/kubernetes/kubernetes/blob/7b2776b89fb1be28d4e9203bdeec079be903c103/staging/src/k8s.io/apimachinery/pkg/util/proxy/upgradeaware.go#L371)
+```go
+	// Proxy the connection. This is bidirectional, so we need a goroutine
+	// to copy in each direction. Once one side of the connection exits, we
+	// exit the function which performs cleanup and in the process closes
+	// the other half of the connection in the defer.
+	writerComplete := make(chan struct{})
+	readerComplete := make(chan struct{})
+
+	go func() {
+		var writer io.WriteCloser
+		if h.MaxBytesPerSec > 0 {
+			writer = flowrate.NewWriter(backendConn, h.MaxBytesPerSec)
+		} else {
+			writer = backendConn
+		}
+		_, err := io.Copy(writer, requestHijackedConn)
+		if err != nil && !strings.Contains(err.Error(), "use of closed network connection") {
+			klog.Errorf("Error proxying data from client to backend: %v", err)
+		}
+		close(writerComplete)
+	}()
+
+	go func() {
+		var reader io.ReadCloser
+		if h.MaxBytesPerSec > 0 {
+			reader = flowrate.NewReader(backendConn, h.MaxBytesPerSec)
+		} else {
+			reader = backendConn
+		}
+		_, err := io.Copy(requestHijackedConn, reader)
+		if err != nil && !strings.Contains(err.Error(), "use of closed network connection") {
+			klog.Errorf("Error proxying data from backend to client: %v", err)
+		}
+		close(readerComplete)
+	}()
+
+	// Wait for one half the connection to exit. Once it does the defer will
+	// clean up the other half of the connection.
+	select {
+	case <-writerComplete:
+	case <-readerComplete:
+	}
+```
+[more](https://github.com/kubernetes/kubernetes/blob/7b2776b89fb1be28d4e9203bdeec079be903c103/staging/src/k8s.io/apimachinery/pkg/util/proxy/upgradeaware.go#L371)
 
 ## kubelet
 
 At last, we reached the last kubernetes component involved in a kubectl
 port-forward command.
 
-[link to source](https://github.com/kubernetes/kubernetes/blob/7b2776b89fb1be28d4e9203bdeec079be903c103/pkg/kubelet/cri/streaming/server.go#L108)
+```go
+// NewServer creates a new Server for stream requests.
+// TODO(tallclair): Add auth(n/z) interface & handling.
+func NewServer(config Config, runtime Runtime) (Server, error) {
+	s := &server{
+		config:  config,
+		runtime: &criAdapter{runtime},
+		cache:   newRequestCache(),
+	}
+
+	if s.config.BaseURL == nil {
+		s.config.BaseURL = &url.URL{
+			Scheme: "http",
+			Host:   s.config.Addr,
+		}
+		if s.config.TLSConfig != nil {
+			s.config.BaseURL.Scheme = "https"
+		}
+	}
+
+	ws := &restful.WebService{}
+	endpoints := []struct {
+		path    string
+		handler restful.RouteFunction
+	}{
+		{"/exec/{token}", s.serveExec},
+		{"/attach/{token}", s.serveAttach},
+		{"/portforward/{token}", s.servePortForward},
+	}
+	// If serving relative to a base path, set that here.
+	pathPrefix := path.Dir(s.config.BaseURL.Path)
+	for _, e := range endpoints {
+		for _, method := range []string{"GET", "POST"} {
+			ws.Route(ws.
+				Method(method).
+				Path(path.Join(pathPrefix, e.path)).
+				To(e.handler))
+		}
+	}
+	handler := restful.NewContainer()
+	handler.Add(ws)
+	s.handler = handler
+	s.server = &http.Server{
+		Addr:      s.config.Addr,
+		Handler:   s.handler,
+		TLSConfig: s.config.TLSConfig,
+	}
+
+	return s, nil
+}
+```
+[more](https://github.com/kubernetes/kubernetes/blob/7b2776b89fb1be28d4e9203bdeec079be903c103/pkg/kubelet/cri/streaming/server.go#L108)
 
 The above source code tellls us that kubelet build a server with an cri-runtime
 which impplements `PortForward(podSandboxID string, port int32, stream
