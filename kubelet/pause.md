@@ -56,7 +56,36 @@ and restarted again.
 The pause is implmented by C code, and it just sleep, awake by signal and do
 reap and loop.
 
-[link to source](https://github.com/kubernetes/kubernetes/blob/d6b408f74890abaa0b5be7172714c7fe89ee7eff/build/pause/linux/pause.c#L42)
+```c
+int main(int argc, char **argv) {
+  int i;
+  for (i = 1; i < argc; ++i) {
+    if (!strcasecmp(argv[i], "-v")) {
+      printf("pause.c %s\n", VERSION_STRING(VERSION));
+      return 0;
+    }
+  }
+
+  if (getpid() != 1)
+    /* Not an error because pause sees use outside of infra containers. */
+    fprintf(stderr, "Warning: pause should be the first process\n");
+
+  if (sigaction(SIGINT, &(struct sigaction){.sa_handler = sigdown}, NULL) < 0)
+    return 1;
+  if (sigaction(SIGTERM, &(struct sigaction){.sa_handler = sigdown}, NULL) < 0)
+    return 2;
+  if (sigaction(SIGCHLD, &(struct sigaction){.sa_handler = sigreap,
+                                             .sa_flags = SA_NOCLDSTOP},
+                NULL) < 0)
+    return 3;
+
+  for (;;)
+    pause();
+  fprintf(stderr, "Error: infinite loop terminated\n");
+  return 42;
+}
+```
+[more](https://github.com/kubernetes/kubernetes/blob/d6b408f74890abaa0b5be7172714c7fe89ee7eff/build/pause/linux/pause.c#L42)
 
 ## Why `kubectl describe pod/xxxx` not showing this container?
 
@@ -65,7 +94,25 @@ by the kubelet by default when a new pod was initliazing. So pause lifecycle is
 bound with the pod, it is responsible for the pod resource holder, especialy
 network namespace.
 
-[link to source](https://github.com/kubernetes/kubernetes/blob/9c2684150c4d4aed99c6f950f4bc4c0754720897/pkg/kubelet/dockershim/docker_sandbox.go#L43)
+```go
+const (
+	defaultSandboxImage = "k8s.gcr.io/pause:3.5"
+
+	// Various default sandbox resources requests/limits.
+	defaultSandboxCPUshares int64 = 2
+
+	// defaultSandboxOOMAdj is the oom score adjustment for the docker
+	// sandbox container. Using this OOM adj makes it very unlikely, but not
+	// impossible, that the defaultSandox will experience an oom kill. -998
+	// is chosen to signify sandbox should be OOM killed before other more
+	// vital processes like the docker daemon, the kubelet, etc...
+	defaultSandboxOOMAdj int = -998
+
+	// Name of the underlying container runtime
+	runtimeName = "docker"
+)
+````
+[more](https://github.com/kubernetes/kubernetes/blob/9c2684150c4d4aed99c6f950f4bc4c0754720897/pkg/kubelet/dockershim/docker_sandbox.go#L43)
 
 The kubelet will
 [run](https://github.com/kubernetes/kubernetes/blob/9c2684150c4d4aed99c6f950f4bc4c0754720897/pkg/kubelet/dockershim/docker_sandbox.go#L89)
