@@ -1,4 +1,4 @@
-all: clean html linux/arm64 docker k8s
+all: clean html linux/arm64 docker/arm64 k8s
 
 clean:
 	@git clean -xdf .
@@ -7,10 +7,10 @@ html:
 	@go run html.go
 
 linux/arm64:
-	@go build kedu.go
+	@GOOS=linux GOARCH=arm64 go build kedu.go
 
-docker: clean html linux/arm64
-	@docker build -t docker.io/thinpark/kedu:latest .
+docker/arm64: clean html linux/arm64
+	@docker build --platform linux/arm64 -t docker.io/thinpark/kedu:latest .
 	@docker push docker.io/thinpark/kedu:latest
 
 k8s:
