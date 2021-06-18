@@ -9,9 +9,10 @@
 
 ## Namespace Isolation
 
-- PID
-- NET
-- UTS
+- IPC (pod shared)
+- PID (pod shared)
+- NET (pod shared)
+- UTS (pod shared)
 - FS
 
 ## Frequently used tools to dig into container world
