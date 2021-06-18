@@ -1,0 +1,28 @@
+# service.spec.clusterIP
+
+This collection explains how a service cluster IP gets allocated.
+
+```bash
+$kubectl explain service.spec.clusterIP
+KIND:     Service
+VERSION:  v1
+
+FIELD:    clusterIP <string>
+
+DESCRIPTION:
+     clusterIP is the IP address of the service and is usually assigned
+     randomly. If an address is specified manually, is in-range (as per system
+     configuration), and is not in use, it will be allocated to the service;
+     otherwise creation of the service will fail. This field may not be changed
+     through updates unless the type field is also being changed to ExternalName
+     (which requires this field to be blank) or the type field is being changed
+     from ExternalName (in which case this field may optionally be specified, as
+     describe above). Valid values are "None", empty string (""), or a valid IP
+     address. Setting this to "None" makes a "headless service" (no virtual IP),
+     which is useful when direct endpoint connections are preferred and proxying
+     is not required. Only applies to types ClusterIP, NodePort, and
+     LoadBalancer. If this field is specified when creating a Service of type
+     ExternalName, creation will fail. This field will be wiped when updating a
+     Service to type ExternalName. More info:
+     https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+```
