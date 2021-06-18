@@ -2,7 +2,7 @@
 
 Docker is designed as s client-server architecture, so a daemon service
 `dockerd` is runing background, listening on port `2379` and
-`sock://run/lib/docker.sock`.
+`sock://run/docker.sock`.
 
 All the docker daily work such `docker build`, `docker pull`, `docker push` etc
 are accomplished by the `dockerd` server.
