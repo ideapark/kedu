@@ -8,3 +8,4 @@ mandantary to appreaciate kubernetes simplicity.
 - [git](git.html)
 - [go](go.html)
 - [linux](linux.html)
+- [dlv](dlv.html)
