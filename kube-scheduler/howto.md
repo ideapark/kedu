@@ -26,6 +26,18 @@ by the user. In this case, the user has requested that a Pod only run on certain
 machines as indicated by the node labels. The predicate is false if a node does
 not have the required label.
 
+| PREDICATES             | DESCRIPTION                                                                                                                  |
+|------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| PodFitsHostPorts       | Checks if a Node has free ports (the network protocol kind) for the Pod ports the Pod is requesting.                         |
+| PodFitsHost            | Checks if a Pod specifies a specific Node by its hostname.                                                                   |
+| PodFitsResources       | Checks if the Node has free resources (eg, CPU and Memory) to meet the requirement of the Pod.                               |
+| MatchNodeSelector      | Checks if a Pod's Node Selector matches the Node's label(s).                                                                 |
+| NoVolumeZoneConflict   | Evaluate if the Volumes that a Pod requests are available on the Node, given the failure zone restrictions for that storage. |
+| NoDiskConflict         | Evaluates if a Pod can fit on a Node due to the volumes it requests, and those that are already mounted.                     |
+| MaxCSIVolumeCount      | Decides how many CSI volumes should be attached, and whether that's over a configured limit.                                 |
+| PodToleratesNodeTaints | checks if a Pod's tolerations can tolerate the Node's taints.                                                                |
+| CheckVolumeBinding     | Evaluates if a Pod can fit due to the volumes it requests. This applies for both bound and unbound PVCs.                     |
+
 - Priorities
 
 Predicates indicate situations that are either true or false -- the Pod either
