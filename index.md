@@ -19,6 +19,7 @@ strongly suggest you have this picture in your mind.
 
 - [client-go](client-go)
 - [kube-apiserver](kube-apiserver)
+- [kube-scheduler](kube-scheduler)
 - [kube-proxy](kube-proxy)
 - [kubeadm](kubeadm)
 - [kubectl](kubectl)
