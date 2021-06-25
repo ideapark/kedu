@@ -89,3 +89,43 @@ false or true with correct user info.
   }
 }
 ```
+
+- ServiceAccount
+
+Every serviceaccount in kubernetes will be associated a secret which
+is created by the internal serviceaccount controller. Pod using this
+serviceaccount will be added the secret automatically in a well-known
+place, aka
+`/var/run/secrets/kubernetes.io/serviceaccount/{ca.crt,namespace,token}`
+
+```text
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2021-06-13T18:31:49Z"
+  name: default
+  namespace: default
+  resourceVersion: "385"
+  uid: 992af922-f89e-4b7e-93df-280a6f09d4a4
+secrets:
+- name: default-token-6tbmg
+```
+
+```text
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    kubernetes.io/service-account.name: default
+    kubernetes.io/service-account.uid: 992af922-f89e-4b7e-93df-280a6f09d4a4
+  creationTimestamp: "2021-06-13T18:31:49Z"
+  name: default-token-6tbmg
+  namespace: default
+  resourceVersion: "381"
+  uid: 3305c8a3-eb35-4dd4-9001-df9dd8a5a75c
+type: kubernetes.io/service-account-token
+data:
+  ca.crt: REDACTED
+  namespace: ZGVmYXVsdA==
+  token: REDACTED
+```
