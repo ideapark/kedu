@@ -129,3 +129,17 @@ data:
   namespace: ZGVmYXVsdA==
   token: REDACTED
 ```
+
+## Authorization (RBAC: Role Based Access Control)
+
+- Role/ClusterRole
+
+| VERB                                                       | RESOURCE          |
+|------------------------------------------------------------|-------------------|
+| get,list,watch,delete,patch,deletecollection,create,update | apiGroup+resource |
+
+- Rolebinding/ClusterRolebinding
+
+| ROLE    | SUBJECT                   |
+|---------|---------------------------|
+| RoleRef | User,Group,ServiceAccount |
