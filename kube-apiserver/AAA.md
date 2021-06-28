@@ -143,3 +143,11 @@ data:
 | ROLE    | SUBJECT                   |
 |---------|---------------------------|
 | RoleRef | User,Group,ServiceAccount |
+
+## Admission Control
+
+- limit resource (resourcequota)
+- enforce policy (podsecuritypolicy)
+- enable advanced feature
+- drive utilization (limitrange)
+- seemlessly integrate new technology (mutatingwebhookconfigurations, validatingwebhookconfigurations)
