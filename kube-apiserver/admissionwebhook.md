@@ -59,5 +59,42 @@ execute mutating logical such as injecting sidecar container
 transparently.
 
 ```python
+import base64
+import json
+import os
 
+from flask import jsonify, Flask, request
+
+app = Flask(__name__)
+
+@app.route("/", method=["POST"])
+def mutation():
+    review = request.get_json()
+    app.logger.info("Mutating AdmissionReview request: %s",
+                    json.dumps(review, indent=4))
+
+    response = {}
+
+    patch = [{
+        'op': 'add',
+        'path': {
+            'image': 'nginx',
+            'name': 'proxy-sidecar',
+        }
+    }]
+
+    response['allowed'] = True
+    response['patch'] = base64.b64encode(json.dumps(patch)
+    response['patchType'] = 'application/json-patch+json'
+
+    review['response'] = response
+
+    return jsonify(review), 200
+
+context = (
+    os.environ.get("WEBHOOK_CERT", "/tls/webhook.crt"),
+    os.environ.get("WEBHOOK_KEY", "/tls/webhook.key"),
+)
+
+app.run(host='0.0.0.0', port='443', debug=True, ssl_context=context)
 ```
