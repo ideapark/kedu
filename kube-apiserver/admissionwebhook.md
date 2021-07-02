@@ -8,7 +8,56 @@ AdmissionResponse
 evaluate based upon business logical, return true for acceptence,
 otherwise false for rejection and reasons.
 
+```python
+import json
+import os
+
+from flask import jsonify, Flask, request
+
+app = Flask(__name__)
+
+@app.route('/', methods=['POST'])
+def validation():
+    review = request.get_json()
+    app.logger.info('Validating AdmissionReview requst: %s',
+                    json.dumps(review, indent=4))
+
+    labels = review['request']['object']['metadata']['labels']
+    response = {}
+    msg = None
+
+    if 'environment' not in list(labels):
+        msg = "Every Pod requres an 'environment' label."
+        response['allowed'] = False
+    elif labels['environment'] not in ('dev', 'prod',):
+        msg = "'environment' label must be one of 'dev' or 'prod'"
+        response['allowed'] = False
+    else:
+        response['allowed'] = True
+
+    status = {
+        'metadata': {},
+        'message': msg
+    }
+
+    response['status'] = status
+
+    review['response'] = response
+    return jsonify(review), 200
+
+context = (
+    os.environ.get('WEBHOOK_CERT', '/tls/webhook.crt'),
+    os.environ.get('WEBHOOK_KEY', '/tls/webhook.key'),
+)
+
+app.run(host='0.0.0.0', port='443', debug=True, ssl_context=context)
+```
+
 - mutating admission controller
 
 execute mutating logical such as injecting sidecar container
 transparently.
+
+```python
+
+```
