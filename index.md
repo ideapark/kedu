@@ -26,6 +26,7 @@ strongly suggest you have this picture in your mind.
 - [kubelet](kubelet)
 - [network](network)
 - [addon](addon)
+- [ha](ha)
 - [coredns](coredns)
 - [etcd](etcd)
 - [docker](docker)
