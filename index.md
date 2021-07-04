@@ -30,6 +30,7 @@ strongly suggest you have this picture in your mind.
 - [coredns](coredns)
 - [etcd](etcd)
 - [docker](docker)
+- [ext](ext)
 - [teapot](teapot)
 
 [Project GitHub](https://github.com/thinpark/kedu)
