@@ -1,11 +1,11 @@
 # CNI: container network interface
 
-`IP-PER-Pod`, every pod is allocated an IP address, and the CNI plugin
+`IP-PER-Pod`, every pod gets allocated an IP address, and the CNI plugin
 is responsible for its allocation and assignment to a Pod.
 
 The container runtime (e.g., Docker) calls the CNI plug-in executable
 (e.g., Calico) to add or remove an interface to or from the
-container’s networking Namespace.
+container’s networking namespace.
 
 > There is a pause container in every Pod, it does nothing meaningful
 > computationally. They merely serve as placeholders for each Pod’s
@@ -35,4 +35,3 @@ Pods, you may want to use a plug-in that provides this capability. By
 the same token, not every plug-in provides support for
 NetworkPolicy. Be sure to evaluate the features that are offered by
 the plug-in before you deploy your cluster.
-
