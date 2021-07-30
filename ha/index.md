@@ -11,7 +11,7 @@
 
 - etcd
 
-2N+1 etcd cluster tolerate N nodes down
+`2n+1` etcd cluster tolerates simultaneously `n` nodes down
 
 - state
 
