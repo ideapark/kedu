@@ -2,8 +2,8 @@
 
 - What is the difference between logging and monitoring.
 
-Though closely related, theyare actually quite different and are used
-for different problems and often stored indifferent infrastructure.
+Though closely related, they are actually quite different and are used
+for different problems and often stored in different infrastructure.
 
 Logging records events (e.g., a Pod being created or an API call
 failing), and monitoring records statistics (e.g., the latency of a
