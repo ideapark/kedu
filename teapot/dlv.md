@@ -36,43 +36,16 @@ main.main() ./cmd/kubectl/kubectl.go:35 (hits goroutine(1):1 total:1) (PC: 0x102
 
 ## Frequently used debug command
 
-1. restart kubectl with arguments
-
-> (dlv) r -v=6 get all
-
-2. set breakpoints
-
-> break 78
-> break kubectl.go:38
-
-3. step command
-
-> n
-
-4. step into function
-
-> s
-
-5. step out function
-
-> so
-
-6. run to next breakpoint
-
-> c
-
-7. print var
-
-> p varname
-
-8. function local variables
-
-> locals
-
-9. global variables
-
-> vars
-
-10. more help
-
-> help
+```bash
+(dlv) r -v=6 get all           ;; restart kubectl with arguments
+(dlv) break 78                 ;; set breakpoints
+(dlv) break kubectl.go:38
+(dlv) n                        ;; step command
+(dlv) s                        ;; step into function
+(dlv) so                       ;; step out function
+(dlv) c                        ;; run to next breakpoint
+(dlv) p varname                ;; print var
+(dlv) locals                   ;; function local variables
+(dlv) vars                     ;; global variables
+(dlv) help                     ;; more help
+```
