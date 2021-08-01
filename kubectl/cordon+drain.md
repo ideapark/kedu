@@ -70,3 +70,50 @@ func (c *CordonHelper) PatchOrReplaceWithContext(clientCtx context.Context, clie
 	return err, patchErr
 }
 ```
+
+- kubectl drain
+
+First, list all the pods on the node to be drained.
+
+``` go
+// GetPodsForDeletion receives resource info for a node, and returns those pods as PodDeleteList,
+// or error if it cannot list pods. All pods that are ready to be deleted can be obtained with .Pods(),
+// and string with all warning can be obtained with .Warnings(), and .Errors() for all errors that
+// occurred during deletion.
+func (d *Helper) GetPodsForDeletion(nodeName string) (*PodDeleteList, []error) {
+	labelSelector, err := labels.Parse(d.PodSelector)
+	if err != nil {
+		return nil, []error{err}
+	}
+
+	podList := &corev1.PodList{}
+	initialOpts := &metav1.ListOptions{
+		LabelSelector: labelSelector.String(),
+		FieldSelector: fields.SelectorFromSet(fields.Set{"spec.nodeName": nodeName}).String(),
+		Limit:         d.ChunkSize,
+	}
+
+	err = resource.FollowContinue(initialOpts, func(options metav1.ListOptions) (runtime.Object, error) {
+		newPods, err := d.Client.CoreV1().Pods(metav1.NamespaceAll).List(d.getContext(), options)
+		if err != nil {
+			podR := corev1.SchemeGroupVersion.WithResource(corev1.ResourcePods.String())
+			return nil, resource.EnhanceListError(err, options, podR.String())
+		}
+		podList.Items = append(podList.Items, newPods.Items...)
+		return newPods, nil
+	})
+
+	if err != nil {
+		return nil, []error{err}
+	}
+
+	list := filterPods(podList, d.makeFilters())
+	if errs := list.errors(); len(errs) > 0 {
+		return list, errs
+	}
+
+	return list, nil
+}
+```
+
+Second, it will evict pod if server supports or backoff to delete pod.
