@@ -111,7 +111,7 @@ const (
 	// Name of the underlying container runtime
 	runtimeName = "docker"
 )
-````
+```
 [more](https://github.com/kubernetes/kubernetes/blob/9c2684150c4d4aed99c6f950f4bc4c0754720897/pkg/kubelet/dockershim/docker_sandbox.go#L43)
 
 The kubelet will
@@ -123,4 +123,4 @@ the pod sandbox when the pod was created or deleted.
 ## Further QA
 
 This conclusion is from the dockershim implementation code, I don't have digged
-out the cri implemetation details.
+out the cri implementation details.
