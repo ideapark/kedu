@@ -33,4 +33,4 @@ strongly suggest you have this picture in your mind.
 - [ext](ext)
 - [teapot](teapot)
 
-[Project GitHub](https://github.com/thinpark/kedu)
+[GitHub](https://github.com/thinpark/kedu)
