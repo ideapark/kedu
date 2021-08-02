@@ -282,6 +282,5 @@ Use "go help mod <command>" for more information about a command.
 
 ## Emacs love Go
 
-Personally, I use emacs to coding and reading Go code. you would have your
-favourite IDEs to working with Go. If you are interesting in what am I using to
-coding, i would recommend you `spacemacs`, try it yourself.
+Personally, I use emacs to coding and reading Go code. you would have
+your favourite IDE to work with Go.
