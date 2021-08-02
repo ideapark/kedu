@@ -20,9 +20,10 @@ Interfaces of all the kubernetes builtin api objects.
 
 - scale
 
-Scale provides a polymorphic scale client capable of fetching and updating Scale
-for any resource which implements the `scale` subresource, as long as that
-subresource operates on a version of scale convertable to autoscaling.Scale.
+Scale provides a polymorphic scale client capable of fetching and
+updating Scale for any resource which implements the `scale`
+subresource, as long as that subresource operates on a version of
+scale convertable to `autoscaling.Scale`.
 
 - lister
 
