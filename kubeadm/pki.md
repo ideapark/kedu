@@ -2,13 +2,13 @@
 
 There are many certificates involved between any two of kubernetes components:
 
-- kube-apiserver -> etcd
-- kube-apiserver -> kubelet
+- kube-apiserver ----------> etcd
+- kube-apiserver ----------> kubelet
 - kube-controller-manager -> kube-apiserver
-- kube-scheduler -> kube-apiserver
-- kube-proxy -> kube-apiserver
-- kubelet -> kube-apiserver
-- kubectl -> kube-apiserver
+- kube-scheduler ----------> kube-apiserver
+- kube-proxy --------------> kube-apiserver
+- kubelet -----------------> kube-apiserver
+- kubectl -----------------> kube-apiserver
 
 ## openssl
 
