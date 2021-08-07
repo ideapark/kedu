@@ -10,10 +10,11 @@ NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   7d16h
 ```
 
-You can resolve dns `kubernetes.default.svc.cluster.local` to ip address
-`10.96.0.1` from inside your pod running on this cluster. I have another post
-explain why this special servce has this special service ip, more refer to
-[service_kubernetes.default.md](service_kubernetes.default.md).
+You can resolve dns `kubernetes.default.svc.cluster.local` to ip
+address `10.96.0.1` from inside your pod running on this cluster. I
+have another post explain why this special service has this special
+service ip, more refer to
+[kubernetes](../kube-apiserver/kubernetes.html).
 
 Now, let's explore more on the coredns deployment:
 
