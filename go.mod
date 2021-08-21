@@ -1,4 +1,4 @@
-module thinpark.io/kedu
+module ideapark.io/kedu
 
 go 1.16
 

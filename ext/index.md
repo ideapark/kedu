@@ -22,7 +22,7 @@ appropriate information to enable.
 
 e,g. there is an unauthenciated service running inside cluster, and
 service has a special annotation such as
-`managed.thinpark.io/authentication-secret: httppasswd-secret`. Our
+`managed.ideapark.io/authentication-secret: httppasswd-secret`. Our
 cluster assistant could watch this special service, and create a
 deployment running nginx and configure nginx using password file
 specified by the upstream service annotation. Then we can expose this
