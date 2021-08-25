@@ -90,11 +90,11 @@ Certificate:
         Version: 1 (0x0)
         Serial Number: 17826230303228152136 (0xf7637e036c37c948)
     Signature Algorithm: sha256WithRSAEncryption
-        Issuer: C=cn, ST=Sichuan, L=Chengdu, O=ideapark, OU=cncf, CN=thinpark-ca/emailAddress=root@thinpark.io
+        Issuer: C=cn, ST=Sichuan, L=Chengdu, O=ideapark, OU=cncf, CN=ideapark-ca/emailAddress=root@ideapark.io
         Validity
             Not Before: Jun 13 06:50:20 2021 GMT
             Not After : Jul 13 06:50:20 2021 GMT
-        Subject: C=cn, ST=Sichuan, L=Chengdu, O=ideapark, OU=cncf, CN=thinpark-ca/emailAddress=root@thinpark.io
+        Subject: C=cn, ST=Sichuan, L=Chengdu, O=ideapark, OU=cncf, CN=ideapark-ca/emailAddress=root@ideapark.io
         Subject Public Key Info:
             Public Key Algorithm: rsaEncryption
                 Public-Key: (2048 bit)
