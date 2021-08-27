@@ -47,3 +47,42 @@ endpoints:
     name: kedu-6cffc79f4-6rcf2
     namespace: default
 ```
+
+`endpointslice.kubernetes.io/managed-by`, which indicates the entity
+managing an EndpointSlice. The endpoint slice controller sets
+`endpointslice-controller.k8s.io` as the value for this label on all
+EndpointSlices it manages. Other entities managing EndpointSlices
+should also set a unique value for this label.
+
+`kubernetes.io/service-name` indicates ownership of the EndpointSlice.
+
+# EndpointSlice mirroring
+
+In some cases, applications create custom `Endpoints` resources. To
+ensure that these applications do not need to concurrently write to
+both `Endpoints` and `EndpointSlice` resources, the cluster's control
+plane mirrors most `Endpoints` resources to corresponding
+`EndpointSlices`.
+
+The control plane mirrors `Endpoints` resources unless:
+
+1. the Endpoints resource has a `endpointslice.kubernetes.io/skip-mirror` label set to true.
+2. the Endpoints resource has a `control-plane.alpha.kubernetes.io/leader` annotation.
+3. the corresponding Service resource does not exist.
+4. the corresponding Service resource has a non-nil selector.
+
+The control plane tries to fill `EndpointSlices` as full as possible,
+but does not actively rebalance them. The logic is fairly
+straightforward:
+
+1. Iterate through existing `EndpointSlices`, remove `endpoints` that are no longer desired and update matching `endpoints` that have changed.
+2. Iterate through `EndpointSlices` that have been modified in the first step and fill them up with any new `endpoints` needed.
+3. If there's still new `endpoints` left to add, try to fit them into a previously unchanged slice and/or create new ones.
+
+Importantly, the third step prioritizes limiting `EndpointSlice`
+updates over a perfectly full distribution of `EndpointSlices`. As an
+example, if there are 10 new endpoints to add and 2 `EndpointSlices`
+with room for 5 more endpoints each, this approach will create a new
+`EndpointSlice` instead of filling up the 2 existing
+`EndpointSlices`. In other words, a single `EndpointSlice` creation is
+preferrable to multiple `EndpointSlice` updates.
