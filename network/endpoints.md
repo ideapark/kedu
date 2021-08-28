@@ -1,5 +1,18 @@
 # Endpoints
 
+Endpoints represent a service endpoint. for example, a nginx instance
+port 80. A kubernetes service may have many endpoints backing it,
+these endpoints will come and go, but the service is stable from the
+point of the service consumer.
+
+Endpoints are tightly coupled with Service, but you can also create it
+by hand. These endpoints life-cycle are not managed by the endpoint
+controller.
+
+Service and endpoints together will be watched by the `kube-proxy`,
+and used to set the iptables rules to do NAT from service IP to
+endpoints IP.
+
 # EndpointSlice
 
 *EndpointSlices* provide a more scalable and extensible way to track
