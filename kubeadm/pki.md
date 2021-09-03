@@ -1,14 +1,16 @@
 # Public Key Infrastracture
 
-There are many certificates involved between any two of kubernetes components:
+There are many certificates involved between any two components of kubernetes:
 
-- kube-apiserver ----------> etcd
-- kube-apiserver ----------> kubelet
-- kube-controller-manager -> kube-apiserver
-- kube-scheduler ----------> kube-apiserver
-- kube-proxy --------------> kube-apiserver
-- kubelet -----------------> kube-apiserver
-- kubectl -----------------> kube-apiserver
+| FROM                    | TO             |
+|-------------------------|----------------|
+| kube-apiserver          | etcd           |
+| kube-apiserver          | kubelet        |
+| kube-controller-manager | kube-apiserver |
+| kube-scheduler          | kube-apiserver |
+| kube-proxy              | kube-apiserver |
+| kubelet                 | kube-apiserver |
+| kubectl                 | kube-apiserver |
 
 ## openssl
 
