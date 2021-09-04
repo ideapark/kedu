@@ -32,6 +32,6 @@ suggest you have this picture in your mind.
 - [etcd](etcd)
 - [docker](docker)
 - [ext](ext)
-- [teapot](teapot)
+- [thirdparty](thirdparty)
 
 [GitHub](https://github.com/ideapark/kedu)
