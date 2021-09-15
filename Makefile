@@ -1,12 +1,10 @@
-all: clean html build image k8s
+all: clean build image k8s
 
 clean:
 	git clean -xdf .
 
-html:
-	go run html.go
-
 build:
+	go generate
 	go build kedu.go
 
 image:

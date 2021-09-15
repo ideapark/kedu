@@ -1,3 +1,4 @@
+//go:generate go run html.go
 package main
 
 import (
