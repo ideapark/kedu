@@ -27,3 +27,33 @@ identify anomalous events that maybe occuring. Logging, on the other
 hand, is critical for diving in and understanding what is
 actually happening, possibly across many machines, to cause such
 anomalous behavior.
+
+- What does it mean when talking about computer system monitoring
+
+## Alerting
+
+Knowing when things are going wrong is usually the most important
+thing that you want monitoring for. You want the monitoring system to
+call in a human to take a look.
+
+## Debugging
+
+Now that you have called in a human, they need to investigate to
+determine the root cause and ultimately resolve whatever the issue is.
+
+## Trending
+
+Alerting and debugging usually happen on time scales on the order of
+minutes to hours. While less urgent, the ability to see how your
+systems are being used and changing over time is also useful.
+Trending can feed into design decisions and processes such as capacity
+planning.
+
+## Plumbing
+
+When all you have is a hammer, everything starts to look like a
+nail. At the end of the day all monitoring systems are data processing
+pipelines. Sometimes it is more convenient to appropriate part of your
+monitoring system for another purpose, rather than building a bespoke
+solution. This is not strictly monitoring, but it is common in
+practice.
