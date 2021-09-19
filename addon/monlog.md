@@ -57,3 +57,46 @@ pipelines. Sometimes it is more convenient to appropriate part of your
 monitoring system for another purpose, rather than building a bespoke
 solution. This is not strictly monitoring, but it is common in
 practice.
+
+- Categories of monitoring
+
+Most monitoring is about *events*. All events have context, having all
+the context for all the events would be great for debugging and
+understanding how your systems are performing in both technical and
+business terms, but that amount of data is not practical to process
+and store. Thus there are what I would see as roughly four ways to
+approach reducing that volume of data to something workable, namely
+*profiling*, *tracing*, *logging*, and *metrics*.
+
+## Profiling
+
+Profiling takes the approach that you can’t have all the context for
+all of the events all of the time, but you can have some of the
+context for limited periods of time.
+
+## Tracing
+
+Tracing doesn’t look at all events, rather it takes some proportion of
+events such as one in a hundred that pass through some functions of
+interest. Tracing will note the functions in the stack trace of the
+points of interest, and often also how long each of these functions
+took to execute. From this you can get an idea of where your program
+is spending time and which code paths are most contributing to
+latency.
+
+## Logging
+
+Logging looks at a limited set of events and records some of the
+context for each of these events. For example, it may look at all
+incoming HTTP requests, or all outgoing database calls.  To avoid
+consuming too much resources, as a rule of thumb you are limited to
+somewhere around a hundred fields per log entry. Beyond that,
+bandwidth and storage space tend to become a concern.
+
+## Metrics
+
+Metrics largely ignore context, instead tracking aggregations over
+time of different types of events. To keep resource usage sane, the
+amount of different numbers being tracked needs to be limited: ten
+thousand per process is a reasonable upper bound for you to keep in
+mind.
