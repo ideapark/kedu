@@ -5,7 +5,7 @@ clean:
 
 build:
 	go generate
-	go build kedu.go
+	GOOS=linux go build kedu.go
 
 image:
 	docker build -t docker.io/ideapark/kedu:latest .
