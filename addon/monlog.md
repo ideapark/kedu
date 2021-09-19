@@ -100,3 +100,9 @@ time of different types of events. To keep resource usage sane, the
 amount of different numbers being tracked needs to be limited: ten
 thousand per process is a reasonable upper bound for you to keep in
 mind.
+
+In one word, e,g. metrics describes that there were 15 requests in the
+last minute that took 4 seconds to handle, resulted in 40 database
+calls, 17 cache hits, and 2 purchases by customers.  The cost and code
+paths of the individual calls would be the concern of profiling or
+logging.
