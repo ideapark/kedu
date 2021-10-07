@@ -34,7 +34,7 @@ List kubernetes builtin api objects
 Kubernetes api objects lifecycle event driven progamming. In another words,
 watch api objects and react more quickly.
 
-- OTHERS
+- Others
 
 1. Legacy non-typed kubernetes client
 2. Tools utility
