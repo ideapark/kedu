@@ -38,7 +38,7 @@ service outside securely.
 Sometimes, you want to add entirely new API resource types to your
 cluster.
 
-1. CustomResourceDefinition (crd)
+1. CustomResourceDefinition (CRD)
 
 It involves using the Kubernetes API itself to add new types to
 Kubernetes. All of the storage and API serving associated with the new
