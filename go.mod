@@ -1,5 +1,5 @@
 module ideapark.io/kedu
 
-go 1.16
+go 1.21
 
-require github.com/gomarkdown/markdown v0.0.0-20210514010506-3b9f47219fe7
+require github.com/gomarkdown/markdown v0.0.0-20231222211730-1d6d20845b47

@@ -8,8 +8,7 @@ build:
 	GOOS=linux go build kedu.go
 
 image:
-	docker build -t docker.io/ideapark/kedu:latest .
-	docker push docker.io/ideapark/kedu:latest
+	podman build -t docker.io/ideapark/kedu:latest .
 
 kubernetes:
 	kubectl delete all -l app=kedu
