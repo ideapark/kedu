@@ -1,0 +1,22 @@
+name: Kubernetes Education
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Makefile
+        run: make
+
+      - name: Push image to docker hub
+        run: |
+          docker push ideapark/kedu:latest
